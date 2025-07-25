@@ -29,11 +29,11 @@ fastify.decorate('authenticate', async function (request, reply) {
 });
 
 fastify.register(mainRoutes);
-
+const port = process.env.PORT || 4000
 const start = async () => {
     try {
         await initializeDatabase();
-        await fastify.listen({ port: 3000 });
+        await fastify.listen({ port: port });
         fastify.log.info(`Server listening on ${fastify.server.address().port}`);
     } catch (err) {
         fastify.log.error(err);
