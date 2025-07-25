@@ -5,6 +5,7 @@ import fastifyFormbody from '@fastify/formbody';
 
 import { initializeDatabase } from './db.js';
 import mainRoutes from './src/routes/index.js';
+require('dotenv').config();
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'a-very-strong-and-long-secret-key-for-jwt-that-is-at-least-32-chars';
