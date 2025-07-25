@@ -5,8 +5,9 @@ import fastifyFormbody from '@fastify/formbody';
 
 import { initializeDatabase } from './db.js';
 import mainRoutes from './src/routes/index.js';
+dotenv.config();
 
-const JWT_SECRET = 'a-very-strong-and-long-secret-key-for-jwt-that-is-at-least-32-chars';
+const JWT_SECRET = process.env.JWT_SECRET || 'a-very-strong-and-long-secret-key-for-jwt-that-is-at-least-32-chars';
 
 const fastify = Fastify({
     logger: true,
@@ -29,11 +30,12 @@ fastify.decorate('authenticate', async function (request, reply) {
 });
 
 fastify.register(mainRoutes);
-const port = process.env.PORT || 4000
 const start = async () => {
     try {
+
+        const port = process.env.PORT || 3000
         await initializeDatabase();
-        await fastify.listen({ port: port });
+        await fastify.listen({ port: port, host: '0.0.0.0' });
         fastify.log.info(`Server listening on ${fastify.server.address().port}`);
     } catch (err) {
         fastify.log.error(err);
